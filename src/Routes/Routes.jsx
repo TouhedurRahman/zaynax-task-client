@@ -5,6 +5,8 @@ import Main from "../Layout/Main";
 import Home from "../Pages/Home/Home";
 import AdminLogin from "../Pages/Login/AdminLogin";
 import AdminDashboard from "../Layout/AdminDashboard";
+import Products from "../Pages/AdminDashboard/Products/Products";
+import AddNewProduct from "../Pages/AdminDashboard/AddNewProduct/AddNewProduct";
 
 export const router = createBrowserRouter([
     {
@@ -26,7 +28,12 @@ export const router = createBrowserRouter([
         element: <AdminDashboard />,
         children: [
             {
-                path: ""
+                path: "products",
+                element: <Products />
+            },
+            {
+                path: "addnewproduct",
+                element: <AddNewProduct />
             }
         ]
     }

@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import AdminNavbar from "../Pages/Shared/AdminNavbar/AdminNavbar";
 import { useState } from "react";
 
@@ -16,7 +16,9 @@ const AdminDashboard = () => {
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content">
                     {/* Page content here */}
-                    <Outlet />
+                    <div className="m-5">
+                        <Outlet />
+                    </div>
                     <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open drawer</label>
                 </div>
                 <div className="drawer-side">
@@ -25,17 +27,17 @@ const AdminDashboard = () => {
                         {/* Sidebar content here */}
 
                         <li>
-                            <NavLink onClick={handlePromotionClick}>Promotion</NavLink>
+                            <Link onClick={handlePromotionClick}>Promotion</Link>
                             {
                                 showPromoButtons &&
                                 <>
-                                    <li><NavLink to="/">Order</NavLink></li>
-                                    <li><NavLink to="/">Products</NavLink></li>
+                                    <li><Link to="/">Order</Link></li>
+                                    <li><Link to="/">Products</Link></li>
                                 </>
                             }
                         </li>
-                        <li><NavLink to="/">Order</NavLink></li>
-                        <li><NavLink to="/">Products</NavLink></li>
+                        <li><Link to="/admindashboard/orders">Order</Link></li>
+                        <li><Link to="/admindashboard/products">Products</Link></li>
                     </ul>
                 </div>
             </div>
