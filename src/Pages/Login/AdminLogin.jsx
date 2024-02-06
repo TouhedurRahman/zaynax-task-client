@@ -8,7 +8,7 @@ const AdminLoginPage = () => {
 
     const onSubmit = (data) => {
         if (data.userId === "admin" && data.password === "password") {
-            navigate("/");
+            navigate("/admindashboard");
         }
     };
 
@@ -16,7 +16,6 @@ const AdminLoginPage = () => {
         <div className="flex justify-center items-center h-screen flex-col">
             <h2 className="text-center text-2xl font-semibold mb-4">Admin Panel</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="bg-gray-100 p-8 rounded-lg shadow-md mb-8">
-                {/* <h2 className="text-center text-2xl font-semibold mb-4">Admin Login</h2> */}
                 <div className="mb-4">
                     <label htmlFor="userId" className="block mb-1">User ID</label>
                     <input

@@ -4,6 +4,7 @@ import {
 import Main from "../Layout/Main";
 import Home from "../Pages/Home/Home";
 import AdminLogin from "../Pages/Login/AdminLogin";
+import AdminDashboard from "../Layout/AdminDashboard";
 
 export const router = createBrowserRouter([
     {
@@ -20,4 +21,13 @@ export const router = createBrowserRouter([
             }
         ]
     },
+    {
+        path: "/admindashboard",
+        element: <AdminDashboard />,
+        children: [
+            {
+                path: ""
+            }
+        ]
+    }
 ]);

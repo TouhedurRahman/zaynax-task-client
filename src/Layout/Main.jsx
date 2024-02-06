@@ -3,11 +3,11 @@ import Navbar from "../Pages/Shared/Navbar/Navbar";
 
 const Main = () => {
     const location = useLocation();
-    const isLoginPage = location.pathname.includes('adminlogin');
+    const isAdminPages = location.pathname.includes('adminlogin') || location.pathname.includes('admindashboard');
     return (
         <div>
             {
-                isLoginPage || <Navbar />
+                isAdminPages || <Navbar />
             }
             <Outlet ></Outlet>
         </div>
