@@ -41,7 +41,7 @@ const Navbar = () => {
                             <Link to="/" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">
                                 User Login
                             </Link>
-                            <Link to="/" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">
+                            <Link to="/adminlogin" className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200">
                                 Admin Login
                             </Link>
                         </div>

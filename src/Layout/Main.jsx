@@ -1,10 +1,14 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../Pages/Shared/Navbar/Navbar";
 
 const Main = () => {
+    const location = useLocation();
+    const isLoginPage = location.pathname.includes('adminlogin');
     return (
         <div>
-            <Navbar />
+            {
+                isLoginPage || <Navbar />
+            }
             <Outlet ></Outlet>
         </div>
     );
