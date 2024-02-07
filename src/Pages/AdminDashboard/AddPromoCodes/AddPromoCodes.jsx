@@ -1,11 +1,35 @@
+import axios from "axios";
 import { useForm, Controller } from "react-hook-form";
+import Swal from "sweetalert2";
 
 function AddPromoCodes() {
-    const { handleSubmit, register, control } = useForm();
+    const { handleSubmit, register, control, reset } = useForm();
 
     const onSubmit = (data) => {
-        data.promoCodes = data.promoCodes.toUpperCase();
-        console.log("Product Details: ", data);
+
+        const { promoCodes, startDate, endDate, discountRate, usageTime, active } = data;
+        const newPromoCode = {
+            promoCode: promoCodes.toUpperCase(),
+            startDate,
+            endDate,
+            discountRate,
+            usageTime,
+            active
+        }
+        console.log(newPromoCode);
+
+        axios.post('http://localhost:5000/promocodes', newPromoCode)
+            .then(data => {
+                if (data.data.insertedId) {
+                    reset();
+                    Swal.fire({
+                        icon: "success",
+                        title: "Your work has been saved",
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+                }
+            })
     };
 
     return (
@@ -59,14 +83,14 @@ function AddPromoCodes() {
                 </div>
 
                 <div className="mb-4">
-                    <label htmlFor="useTime" className="block mb-2 font-bold text-gray-700">
+                    <label htmlFor="usageTime" className="block mb-2 font-bold text-gray-700">
                         Use Time
                     </label>
                     <input
-                        id="useTime"
+                        id="usageTime"
                         className="w-full px-3 py-2 border rounded"
                         type="text"
-                        {...register("useTime")}
+                        {...register("usageTime")}
                     />
                 </div>
                 <div className="flex justify-between items-center mb-4">
