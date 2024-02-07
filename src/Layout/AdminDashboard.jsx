@@ -12,7 +12,7 @@ const AdminDashboard = () => {
     return (
         <div>
             <AdminNavbar />
-            <div className="drawer lg:drawer-open border-e-2">
+            <div className="drawer lg:drawer-open border-e-2 bg-[#FAFAFA]">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content">
                     {/* Page content here */}
@@ -21,7 +21,7 @@ const AdminDashboard = () => {
                     </div>
                     <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open drawer</label>
                 </div>
-                <div className="drawer-side">
+                <div className="drawer-side border-r-1 border-black shadow-lg">
                     <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                     <ul className="menu p-4 w-80 min-h-full bg-[white] text-base-content">
                         {/* Sidebar content here */}
@@ -31,7 +31,7 @@ const AdminDashboard = () => {
                             {
                                 showPromoButtons &&
                                 <>
-                                    <li><Link to="//admindashboard/promocodes">Promo Codes</Link></li>
+                                    <li><Link to="/admindashboard/promocodes">Promo Codes</Link></li>
                                     <li><Link to="/admindashboard/addpromocodes">Add Promo Codes</Link></li>
                                 </>
                             }

@@ -38,7 +38,7 @@ const AddNewProduct = () => {
                             reset();
                             Swal.fire({
                                 icon: "success",
-                                title: "Your work has been saved",
+                                title: "New Product successfully added!",
                                 showConfirmButton: false,
                                 timer: 1000
                             });
@@ -74,7 +74,7 @@ const AddNewProduct = () => {
 
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Product Price (Before discount)
+                        Product Price (Before Discount)
                     </label>
                     <input
                         className="w-full px-3 py-2 border rounded"

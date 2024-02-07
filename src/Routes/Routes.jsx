@@ -8,6 +8,7 @@ import AdminDashboard from "../Layout/AdminDashboard";
 import Products from "../Pages/AdminDashboard/Products/Products";
 import AddNewProduct from "../Pages/AdminDashboard/AddNewProduct/AddNewProduct";
 import AddPromoCodes from "../Pages/AdminDashboard/AddPromoCodes/AddPromoCodes";
+import PromoCodes from "../Pages/AdminDashboard/PromoCodes/Promocodes";
 
 export const router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
         path: "/admindashboard",
         element: <AdminDashboard />,
         children: [
+            {
+                path: "promocodes",
+                element: <PromoCodes />
+            },
             {
                 path: "addpromocodes",
                 element: <AddPromoCodes />

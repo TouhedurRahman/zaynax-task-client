@@ -5,8 +5,7 @@ import Swal from "sweetalert2";
 function AddPromoCodes() {
     const { handleSubmit, register, control, reset } = useForm();
 
-    const onSubmit = (data) => {
-
+    const handleAddPromocode = (data) => {
         const { promoCodes, startDate, endDate, discountRate, usageTime, active } = data;
         const newPromoCode = {
             promoCode: promoCodes.toUpperCase(),
@@ -15,8 +14,7 @@ function AddPromoCodes() {
             discountRate,
             usageTime,
             active
-        }
-        console.log(newPromoCode);
+        };
 
         axios.post('http://localhost:5000/promocodes', newPromoCode)
             .then(data => {
@@ -24,17 +22,17 @@ function AddPromoCodes() {
                     reset();
                     Swal.fire({
                         icon: "success",
-                        title: "Your work has been saved",
+                        title: "New Promocode successfully added!",
                         showConfirmButton: false,
                         timer: 1000
                     });
                 }
-            })
+            });
     };
 
     return (
         <div className="max-w-md mx-auto bg-white p-8 mt-8 rounded shadow-md">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(handleAddPromocode)}>
                 <div className="mb-4">
                     <label htmlFor="promoCodes" className="block mb-2 font-bold text-gray-700">
                         Promo Codes
@@ -127,7 +125,7 @@ function AddPromoCodes() {
                         type="submit"
                         className="bg-yellow-500 text-black py-2 px-4 rounded hover:bg-yellow-600"
                     >
-                        Add Product
+                        Add Promo Code
                     </button>
                 </div>
             </form>
