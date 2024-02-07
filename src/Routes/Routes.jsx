@@ -2,7 +2,7 @@ import {
     createBrowserRouter,
 } from "react-router-dom";
 import Main from "../Layout/Main";
-import Home from "../Pages/Home/Home";
+import Home from "../Pages/Home/Home/Home";
 import AdminLogin from "../Pages/Login/AdminLogin";
 import AdminDashboard from "../Layout/AdminDashboard";
 import Products from "../Pages/AdminDashboard/Products/Products";
