@@ -1,15 +1,55 @@
+import axios from "axios";
 import { useForm, Controller } from "react-hook-form";
+import Swal from "sweetalert2";
 
-function AddNewProduct() {
-    const { handleSubmit, control, register } = useForm();
+const img_hosting_token = import.meta.env.VITE_IMG_UPLOAD_TOKEN;
 
-    const onSubmit = (data) => {
-        console.log(data);
+const AddNewProduct = () => {
+    const { handleSubmit, control, register, reset } = useForm();
+
+    const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
+
+    const handleAddProduct = (data) => {
+        const formData = new FormData();
+        formData.append("image", data.image[0]);
+
+        fetch(img_hosting_url, {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(imgResponse => {
+                const imgURL = imgResponse.data.display_url;
+                const { productName, price, discountRate, shippingCharge, color, size, active } = data;
+                const newItem = {
+                    image: imgURL,
+                    productName,
+                    price: parseFloat((price) - (price * (discountRate / 100))),
+                    discountRate,
+                    shippingCharge,
+                    color,
+                    size: size.toUpperCase(),
+                    active
+                }
+
+                axios.post('http://localhost:5000/products', newItem)
+                    .then(data => {
+                        if (data.data.insertedId) {
+                            reset();
+                            Swal.fire({
+                                icon: "success",
+                                title: "Your work has been saved",
+                                showConfirmButton: false,
+                                timer: 1000
+                            });
+                        }
+                    })
+            })
     };
 
     return (
         <div className="max-w-md mx-auto bg-white p-8 mt-8 rounded shadow-md">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(handleAddProduct)}>
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">
                         Image Upload
