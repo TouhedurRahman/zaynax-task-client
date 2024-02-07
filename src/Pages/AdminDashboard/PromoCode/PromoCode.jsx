@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
+
 const PromoCode = ({ idx, promocode }) => {
-    const { promoCode, startDate, endDate, discountRate, usageTime, active, createdAt } = promocode;
+    const { _id, promoCode, startDate, endDate, discountRate, usageTime, active, createdAt } = promocode;
 
     const date = new Date(createdAt);
     const formattedDate = date.toLocaleString('en-US', {
@@ -18,7 +20,7 @@ const PromoCode = ({ idx, promocode }) => {
                     <p>{promoCode}</p>
                 </div>
                 <div className="flex items-center">
-                    <button className="btn btn-warning rounded-lg mr-5">Edit</button>
+                    <Link to={`/admindashboard/update-promo/${_id}`} className="btn btn-warning rounded-lg mr-5">Edit</Link>
                     {
                         active
                             ?

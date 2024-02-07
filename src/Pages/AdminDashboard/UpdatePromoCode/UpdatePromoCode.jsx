@@ -1,44 +1,59 @@
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useForm, Controller } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
-function AddPromoCodes() {
+const UpdatePromoCode = () => {
     const { handleSubmit, register, control, reset } = useForm();
 
-    const handleAddPromocode = (data) => {
-        const { promoCodes, startDate, endDate, discountRate, usageTime, active } = data;
-        const newPromoCode = {
-            promoCode: promoCodes.toUpperCase(),
+    const { id } = useParams();
+    const navigate = useNavigate();
+
+    const { data: promo = {} } = useQuery({
+        queryKey: ["promo", id],
+        queryFn: async () => {
+            const { data } = await axios.get(`http://localhost:5000/promocode/${id}`);
+            return data;
+        },
+    });
+
+    const handleUpdatePromocode = (data) => {
+        const { startDate, endDate, discountRate, usageTime, active } = data;
+        const updatedPromo = {
             startDate,
             endDate,
-            discountRate,
-            usageTime,
+            discountRate: parseInt(discountRate),
+            usageTime: parseInt(usageTime),
             active
         };
 
-        axios.post('http://localhost:5000/promocodes', newPromoCode)
-            .then(data => {
-                if (data.data.insertedId) {
+        axios.patch(`http://localhost:5000/promocode/${promo._id}`, updatedPromo)
+            .then(response => {
+                if (response.data.modifiedCount) {
                     reset();
+                    navigate("/admindashboard/promocodes");
                     Swal.fire({
                         icon: "success",
-                        title: "New Promocode successfully added!",
+                        title: "Promo Code successfully updated!",
                         showConfirmButton: false,
-                        timer: 1000
+                        timer: 1500,
                     });
                 }
-            });
-    };
+            })
+    }
 
     return (
         <div className="max-w-md mx-auto bg-white p-8 mt-8 rounded shadow-md">
-            <form onSubmit={handleSubmit(handleAddPromocode)}>
+            <form onSubmit={handleSubmit(handleUpdatePromocode)}>
                 <div className="mb-4">
                     <label htmlFor="promoCodes" className="block mb-2 font-bold text-gray-700">
                         Promo Codes
                     </label>
                     <input
                         id="promoCodes"
+                        defaultValue={promo?.promoCode}
+                        readOnly
                         className="w-full px-3 py-2 border rounded"
                         type="text"
                         {...register("promoCodes", { required: true })}
@@ -51,6 +66,7 @@ function AddPromoCodes() {
                     </label>
                     <input
                         type="date"
+                        defaultValue={promo.startDate}
                         {...register("startDate", { required: true })}
                         className="input input-my-bordered w-full"
                     />
@@ -62,6 +78,7 @@ function AddPromoCodes() {
                     </label>
                     <input
                         type="date"
+                        defaultValue={promo.endDate}
                         {...register("endDate", { required: true })}
                         className="input input-my-bordered w-full"
                     />
@@ -75,6 +92,7 @@ function AddPromoCodes() {
                         id="discountRate"
                         className="w-full px-3 py-2 border rounded"
                         type="number"
+                        defaultValue={promo.discountRate}
                         step="0.01"
                         {...register("discountRate", { required: true })}
                     />
@@ -88,6 +106,7 @@ function AddPromoCodes() {
                         id="usageTime"
                         className="w-full px-3 py-2 border rounded"
                         type="text"
+                        defaultValue={promo.usageTime}
                         {...register("usageTime", { required: true })}
                     />
                 </div>
@@ -125,12 +144,12 @@ function AddPromoCodes() {
                         type="submit"
                         className="bg-yellow-500 text-black py-2 px-4 rounded hover:bg-yellow-600"
                     >
-                        Add Promo Code
+                        Update Promo
                     </button>
                 </div>
             </form>
         </div>
     );
-}
+};
 
-export default AddPromoCodes;
+export default UpdatePromoCode;

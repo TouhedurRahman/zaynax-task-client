@@ -57,7 +57,7 @@ const AddNewProduct = () => {
                     <input
                         className="w-full px-3 py-2 border rounded"
                         type="file"
-                        {...register("image")}
+                        {...register("image", { required: true })}
                     />
                 </div>
 
@@ -68,7 +68,7 @@ const AddNewProduct = () => {
                     <input
                         className="w-full px-3 py-2 border rounded"
                         type="text"
-                        {...register("productName")}
+                        {...register("productName", { required: true })}
                     />
                 </div>
 
@@ -80,7 +80,7 @@ const AddNewProduct = () => {
                         className="w-full px-3 py-2 border rounded"
                         type="number"
                         step="0.01"
-                        {...register("price")}
+                        {...register("price", { required: true })}
                     />
                 </div>
 
@@ -92,7 +92,7 @@ const AddNewProduct = () => {
                         className="w-full px-3 py-2 border rounded"
                         type="number"
                         step="0.01"
-                        {...register("discountRate")}
+                        {...register("discountRate", { required: true })}
                     />
                 </div>
 
@@ -104,7 +104,7 @@ const AddNewProduct = () => {
                         className="w-full px-3 py-2 border rounded"
                         type="number"
                         step="0.01"
-                        {...register("shippingCharge")}
+                        {...register("shippingCharge", { required: true })}
                     />
                 </div>
 
@@ -115,7 +115,7 @@ const AddNewProduct = () => {
                     <input
                         className="w-full px-3 py-2 border rounded"
                         type="text"
-                        {...register("color")}
+                        {...register("color", { required: true })}
                     />
                 </div>
 
@@ -126,7 +126,7 @@ const AddNewProduct = () => {
                     <input
                         className="w-full px-3 py-2 border rounded"
                         type="text"
-                        {...register("size")}
+                        {...register("size", { required: true })}
                     />
                 </div>
 
