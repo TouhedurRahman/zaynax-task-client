@@ -31,8 +31,8 @@ const AdminDashboard = () => {
                             {
                                 showPromoButtons &&
                                 <>
-                                    <li><Link to="/">Order</Link></li>
-                                    <li><Link to="/">Products</Link></li>
+                                    <li><Link to="//admindashboard/promocodes">Promo Codes</Link></li>
+                                    <li><Link to="/admindashboard/addpromocodes">Add Promo Codes</Link></li>
                                 </>
                             }
                         </li>
