@@ -25,14 +25,14 @@ const Navbar = () => {
                 />
             </div>
             <div className="flex items-center">
-                <Link to="/" className="flex justify-between items-center text-black mr-5">
-                    <div className="flex items-center">
+                <Link to="/cart" className="flex justify-between items-center text-black mr-5">
+                    <div className="flex items-center hover:bg-gray-200 rounded-lg p-3">
                         <FaCartPlus size={20} />
                         <span className='mx-2'>Cart</span>
                         <span className="bg-yellow-500 rounded-full px-2 text-black">{2}</span>
                     </div>
                 </Link>
-                <button className="text-black mr-5" onClick={toggleUserDropdown}>
+                <button className="text-black mr-5 hover:bg-gray-200 rounded-lg p-3" onClick={toggleUserDropdown}>
                     <FaUserShield size={20} />
                 </button>
                 {

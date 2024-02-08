@@ -10,6 +10,7 @@ import AddNewProduct from "../Pages/AdminDashboard/AddNewProduct/AddNewProduct";
 import AddPromoCodes from "../Pages/AdminDashboard/AddPromoCodes/AddPromoCodes";
 import PromoCodes from "../Pages/AdminDashboard/PromoCodes/Promocodes";
 import UpdatePromoCode from "../Pages/AdminDashboard/UpdatePromoCode/UpdatePromoCode";
+import Cart from "../Pages/Home/Cart/Cart";
 
 export const router = createBrowserRouter([
     {
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Home />
+            },
+            {
+                path: "/cart",
+                element: <Cart />
             },
             {
                 path: "/adminlogin",

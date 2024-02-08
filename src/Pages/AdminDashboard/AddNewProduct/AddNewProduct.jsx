@@ -24,7 +24,7 @@ const AddNewProduct = () => {
                 const newItem = {
                     image: imgURL,
                     productName,
-                    price: parseFloat((price) - (price * (discountRate / 100))),
+                    price: parseInt((price) - (price * (discountRate / 100))),
                     discountRate,
                     shippingCharge,
                     color,
