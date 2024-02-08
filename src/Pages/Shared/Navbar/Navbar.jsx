@@ -3,9 +3,12 @@ import { useState } from 'react';
 import { FaUserShield } from "react-icons/fa";
 import { FaCartPlus } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import useCart from '../../../hooks/useCart';
 
 const Navbar = () => {
     const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+    const [cart] = useCart();
+
 
     const toggleUserDropdown = () => {
         setIsUserDropdownOpen(!isUserDropdownOpen);
@@ -14,7 +17,7 @@ const Navbar = () => {
     return (
         <nav className="bg-white p-4 flex justify-between items-center shadow-lg">
             <div className="flex items-center ml-5">
-                <div className="text-black font-bold text-xl">Logo</div>
+                <Link to="/" className="text-black font-bold text-xl">Logo</Link>
             </div>
             <div className="bg-white boder-0 border-b-2">
                 <input
@@ -29,7 +32,7 @@ const Navbar = () => {
                     <div className="flex items-center hover:bg-gray-200 rounded-lg p-3">
                         <FaCartPlus size={20} />
                         <span className='mx-2'>Cart</span>
-                        <span className="bg-yellow-500 rounded-full px-2 text-black">{2}</span>
+                        <span className="bg-yellow-500 rounded-full px-2 text-black">{cart?.length || 0}</span>
                     </div>
                 </Link>
                 <button className="text-black mr-5 hover:bg-gray-200 rounded-lg p-3" onClick={toggleUserDropdown}>

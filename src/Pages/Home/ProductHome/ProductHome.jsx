@@ -1,5 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import useCart from "../../../hooks/useCart";
 
 const ProductHome = ({ product }) => {
     const {
@@ -12,6 +13,8 @@ const ProductHome = ({ product }) => {
         size,
         active
     } = product;
+
+    const [, refetch] = useCart();
 
     const handleAddToCart = (product) => {
         const cartProduct = {
@@ -26,7 +29,7 @@ const ProductHome = ({ product }) => {
         axios.post('http://localhost:5000/cart', cartProduct)
             .then(response => {
                 if (response.data.insertedId) {
-                    // refetch();
+                    refetch();
                     Swal.fire({
                         icon: "success",
                         title: "Item is added to the cart!",
