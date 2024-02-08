@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import useCart from "../../../hooks/useCart";
 import CartProduct from "../CartProduct/CartProduct";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const Cart = () => {
-    const [cart] = useCart();
+    const [cart, refetch] = useCart();
     const [newCart, setNewcart] = useState([]);
     const [promoCode, setPromoCode] = useState('');
     const [termsAgreed, setTermsAgreed] = useState(false);
@@ -43,7 +45,22 @@ const Cart = () => {
         if (!termsAgreed) {
             seterrorMsg(true);
         } else {
-            console.log("Checkout");
+            const orderedInfo = {
+                totalPrice: calculateTotalPrice,
+                status: "panding"
+            }
+            axios.post("http://localhost:5000/orders", orderedInfo)
+                .then(response => {
+                    if (response.data.insertResult.insertedId && response.data.deleteResult.deletedCount > 0) {
+                        refetch();
+                        Swal.fire({
+                            icon: "success",
+                            title: "Congrats! Order successfully placed.",
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                })
         }
     };
 
@@ -53,39 +70,50 @@ const Cart = () => {
                 <Link to="/" className="btn btn-warning rounded-full">Go Back</Link>
             </div>
             <div className="flex flex-between m-5">
+                {
+                    cart.length > 0
+                        ?
+                        <>
+                            <div className="w-[75%] border-black">
+                                <div>
+                                    {
+                                        cart.map(product => <CartProduct
+                                            key={product._id}
+                                            product={product}
+                                            newCart={newCart}
+                                            setNewcart={setNewcart}
+                                        ></CartProduct>)
+                                    }
+                                </div>
+                                <div className="flex justify-between items-center m-2 mt-5">
+                                    {/* Toggle button */}
+                                    <div>
+                                        {
+                                            errorMsg &&
+                                            <>
+                                                <p className="text-red-800 font-mono">You must agree to the terms and conditions</p>
+                                            </>
+                                        }
+                                        <label className="flex items-center space-x-2">
+                                            <input type="checkbox" checked={termsAgreed} onChange={() => setTermsAgreed(!termsAgreed)} />
+                                            <span>I agree to the terms and conditions</span>
+                                        </label>
+                                    </div>
+                                    {/* Checkout button */}
+                                    <button onClick={handleCheckout} className="bg-yellow-400 text-black px-4 py-2 rounded">Checkout</button>
+                                </div>
+                            </div>
+                        </>
+                        :
+                        <>
+                            <div className="w-[75%] flex justify-center items-center text-4xl font-serif font-bold">
+                                <p>
+                                    You have no product in cart.
+                                </p>
+                            </div>
+                        </>
+                }
 
-                <div className="w-[75%] border-black">
-                    <h1>
-                        cart Product
-                    </h1>
-                    <div>
-                        {
-                            cart.map(product => <CartProduct
-                                key={product._id}
-                                product={product}
-                                newCart={newCart}
-                                setNewcart={setNewcart}
-                            ></CartProduct>)
-                        }
-                    </div>
-                    <div className="flex justify-between items-center m-2 mt-5">
-                        {/* Toggle button */}
-                        <div>
-                            {
-                                errorMsg &&
-                                <>
-                                    <p className="text-red-800 font-mono">You must agree to the terms and conditions</p>
-                                </>
-                            }
-                            <label className="flex items-center space-x-2">
-                                <input type="checkbox" checked={termsAgreed} onChange={() => setTermsAgreed(!termsAgreed)} />
-                                <span>I agree to the terms and conditions</span>
-                            </label>
-                        </div>
-                        {/* Checkout button */}
-                        <button onClick={handleCheckout} className="bg-yellow-400 text-black px-4 py-2 rounded">Checkout</button>
-                    </div>
-                </div>
                 <div className="w-[25%] m-5 p-2 border border-2 border-dotted rounded-lg">
                     <div className="text-center font-extrabold uppercase font-serif border border-b-black border-dotted p-5 rounded-lg">
                         Order Summary
