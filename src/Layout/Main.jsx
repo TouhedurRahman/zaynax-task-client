@@ -5,7 +5,7 @@ const Main = () => {
     const location = useLocation();
     const isAdminPages = location.pathname.includes('adminlogin') || location.pathname.includes('admindashboard');
     return (
-        <div>
+        <div className="bg-[#FAFAFA]">
             {
                 isAdminPages || <Navbar />
             }

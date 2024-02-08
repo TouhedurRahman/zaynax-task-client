@@ -8,7 +8,7 @@ const Home = () => {
 
     return (
         <div>
-            <div className='grid grid-cols-5 gap-4 m-10'>
+            <div className='grid grid-cols-5 gap-4 m-10 pb-20'>
                 {
                     activeProducts.map(product => <ProductHome
                         key={product._id}
