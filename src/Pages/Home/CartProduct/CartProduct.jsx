@@ -1,7 +1,9 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 
-const CartProduct = ({ product, newCart, setNewcart }) => {
+const CartProduct = ({ product, newCart, setNewcart, refetch }) => {
     const { _id, image, productName, color, size, price, shippingCharge } = product;
     const [quantity, setQuantity] = useState(1);
 
@@ -27,6 +29,32 @@ const CartProduct = ({ product, newCart, setNewcart }) => {
         }
     };
 
+    const handleDelete = () => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:5000/cart/${_id}`)
+                    .then(response => {
+                        if (response.data.deletedCount > 0) {
+                            refetch();
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your item has been deleted.",
+                                icon: "success"
+                            });
+                        }
+                    })
+            }
+        });
+    }
+
     return (
         <>
             <div className="flex justify-start items-center m-2 bg-white rounded-lg boder bodered">
@@ -38,7 +66,7 @@ const CartProduct = ({ product, newCart, setNewcart }) => {
                 <div className="w-full flex flex-col p-5">
                     <div className="w-full flex justify-between items-center mb-5">
                         <p>{productName}</p>
-                        <button className="focus:outline-none">
+                        <button onClick={() => handleDelete()} className="focus:outline-none">
                             <FaTrash className="text-red-500" />
                         </button>
                     </div>

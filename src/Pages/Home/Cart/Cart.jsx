@@ -82,6 +82,7 @@ const Cart = () => {
                                             product={product}
                                             newCart={newCart}
                                             setNewcart={setNewcart}
+                                            refetch={refetch}
                                         ></CartProduct>)
                                     }
                                 </div>
