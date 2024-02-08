@@ -11,6 +11,11 @@ import AddPromoCodes from "../Pages/AdminDashboard/AddPromoCodes/AddPromoCodes";
 import PromoCodes from "../Pages/AdminDashboard/PromoCodes/Promocodes";
 import UpdatePromoCode from "../Pages/AdminDashboard/UpdatePromoCode/UpdatePromoCode";
 import Cart from "../Pages/Home/Cart/Cart";
+import Orders from "../Pages/AdminDashboard/Orders/Orders";
+import AllOrders from "../Pages/AdminDashboard/AllOrders/AllOrders";
+import PendingOrders from "../Pages/AdminDashboard/PendingOrders/PendingOrders";
+import ConfirmedOrders from "../Pages/AdminDashboard/ConfirmedOrders/ConfirmedOrders";
+import CanceledOrders from "../Pages/AdminDashboard/CanceledOrders/CanceledOrders";
 
 export const router = createBrowserRouter([
     {
@@ -46,6 +51,28 @@ export const router = createBrowserRouter([
             {
                 path: "update-promo/:id",
                 element: <UpdatePromoCode />
+            },
+            {
+                path: "orders",
+                element: <Orders />,
+                children: [
+                    {
+                        path: "all-orders",
+                        element: <AllOrders />
+                    },
+                    {
+                        path: "pending-orders",
+                        element: <PendingOrders />
+                    },
+                    {
+                        path: "confirmed-orders",
+                        element: <ConfirmedOrders />
+                    },
+                    {
+                        path: "canceled-orders",
+                        element: <CanceledOrders />
+                    }
+                ]
             },
             {
                 path: "products",

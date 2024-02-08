@@ -47,7 +47,7 @@ const Cart = () => {
         } else {
             const orderedInfo = {
                 totalPrice: calculateTotalPrice,
-                status: "panding"
+                status: "pending"
             }
             axios.post("http://localhost:5000/orders", orderedInfo)
                 .then(response => {
