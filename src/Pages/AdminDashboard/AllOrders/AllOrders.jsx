@@ -1,7 +1,28 @@
+import axios from 'axios';
 import useOrders from '../../../hooks/useOrders';
+import Swal from 'sweetalert2';
 
 const AllOrders = () => {
-    const [orders] = useOrders();
+    const [orders, refetch] = useOrders();
+
+    const handleUpdateStatus = (id, updateStatus) => {
+        const updatedStatus = {
+            status: updateStatus
+        }
+
+        axios.patch(`http://localhost:5000/order/${id}`, updatedStatus)
+            .then(response => {
+                if (response.data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        icon: "success",
+                        title: "Status successfully updated!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+            })
+    }
 
     return (
         <div>
@@ -29,8 +50,17 @@ const AllOrders = () => {
                                         <td>12345</td>
                                         <td>{order.totalPrice}</td>
                                         <td className="flex justify-center items-center">
-                                            <button className="btn btn-warning mr-3">Confirm</button>
-                                            <button className="btn btn-error ml-3">Cancel</button>
+                                            {
+                                                order.status !== 'pending'
+                                                    ?
+                                                    <>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <button onClick={() => handleUpdateStatus(order._id, "confirm")} className="btn btn-warning mr-3">Confirm</button>
+                                                        <button onClick={() => handleUpdateStatus(order._id, "canceled")} className="btn btn-error ml-3">Cancel</button>
+                                                    </>
+                                            }
                                         </td>
                                         <td>{order.status}</td>
                                     </tr>)
