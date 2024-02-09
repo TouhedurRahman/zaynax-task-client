@@ -4,13 +4,18 @@ import CartProduct from "../CartProduct/CartProduct";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import usePromoCodes from "../../../hooks/usePromoCodes";
 
 const Cart = () => {
     const [cart, refetch] = useCart();
+    const [promocodes] = usePromoCodes();
+    const [discountPrice, setDiscountPrice] = useState(0);
+
     const [newCart, setNewcart] = useState([]);
     const [promoCode, setPromoCode] = useState('');
     const [termsAgreed, setTermsAgreed] = useState(false);
     const [errorMsg, seterrorMsg] = useState(false);
+    const [errorPromoMsg, setErrorPromoMsg] = useState("");
 
     useEffect(() => {
         setNewcart(
@@ -33,8 +38,22 @@ const Cart = () => {
         return total + product.shippingCharge;
     }, 0);
 
+    // const handleApplyPromoCode = () => {
+    //     console.log('Promo code applied: ', promoCode);
+    // };
     const handleApplyPromoCode = () => {
-        console.log('Promo code applied: ', promoCode);
+        const foundPromoCode = promocodes.find(code => code.promoCode === promoCode);
+
+        if (foundPromoCode) {
+            const discountRate = foundPromoCode.discountRate;
+
+            const discount = ((calculateTotalPrice + calculateShippingCharge) * (discountRate / 100)).toFixed(2);
+            setDiscountPrice(discount);
+
+        } else {
+            // Promo code not found
+            setErrorPromoMsg("Inavlid Promo Code")
+        }
     };
 
     const handlePromoCodeChange = (event) => {
@@ -46,7 +65,7 @@ const Cart = () => {
             seterrorMsg(true);
         } else {
             const orderedInfo = {
-                totalPrice: calculateTotalPrice,
+                totalPrice: ((calculateTotalPrice + calculateShippingCharge) - discountPrice),
                 status: "pending"
             }
             axios.post("http://localhost:5000/orders", orderedInfo)
@@ -126,7 +145,7 @@ const Cart = () => {
                         </div>
                         <div className="flex justify-between items-center my-3">
                             <p>Discount </p>
-                            <p>৳ 0/-</p>
+                            <p>৳ {discountPrice}/-</p>
                         </div>
                         <div className="flex justify-between items-center my-3">
                             <p>Shipping Charge </p>
@@ -143,14 +162,21 @@ const Cart = () => {
                                 onChange={handlePromoCodeChange}
                                 placeholder="Enter Promo Code"
                                 className="mr-2 p-2 border border-gray-400"
+                                required
                             />
                             <button onClick={handleApplyPromoCode} className="bg-blue-500 text-white px-4 py-2 rounded">
                                 Apply
                             </button>
                         </div>
+                        {
+                            errorPromoMsg &&
+                            <>
+                                <p className="text-red-800 font-mono">Invalid or expired promocode.</p>
+                            </>
+                        }
                         <div className="flex justify-between items-center my-3">
                             <p>Total Payable </p>
-                            <p>৳ {calculateTotalPrice + calculateShippingCharge}/-</p>
+                            <p>৳ {(calculateTotalPrice + calculateShippingCharge) - discountPrice}/-</p>
                         </div>
                     </div>
                 </div>
