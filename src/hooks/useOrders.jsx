@@ -5,7 +5,7 @@ const useOrders = () => {
     const { data: orders = [], refetch } = useQuery({
         queryKey: ['orders'],
         queryFn: async () => {
-            const url = 'http://localhost:5000/orders';
+            const url = 'https://zaynax-task-server.vercel.app/orders';
             const result = await fetch(url);
             return result.json();
         }

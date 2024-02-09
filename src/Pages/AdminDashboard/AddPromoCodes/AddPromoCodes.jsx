@@ -16,7 +16,7 @@ function AddPromoCodes() {
             active
         };
 
-        axios.post('http://localhost:5000/promocodes', newPromoCode)
+        axios.post('https://zaynax-task-server.vercel.app/promocodes', newPromoCode)
             .then(data => {
                 if (data.data.insertedId) {
                     reset();

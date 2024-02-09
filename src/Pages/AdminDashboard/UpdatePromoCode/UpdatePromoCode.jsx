@@ -13,7 +13,7 @@ const UpdatePromoCode = () => {
     const { data: promo = {} } = useQuery({
         queryKey: ["promo", id],
         queryFn: async () => {
-            const { data } = await axios.get(`http://localhost:5000/promocode/${id}`);
+            const { data } = await axios.get(`https://zaynax-task-server.vercel.app/promocode/${id}`);
             return data;
         },
     });
@@ -28,7 +28,7 @@ const UpdatePromoCode = () => {
             active
         };
 
-        axios.patch(`http://localhost:5000/promocode/${promo._id}`, updatedPromo)
+        axios.patch(`https://zaynax-task-server.vercel.app/promocode/${promo._id}`, updatedPromo)
             .then(response => {
                 if (response.data.modifiedCount) {
                     reset();

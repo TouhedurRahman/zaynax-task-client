@@ -4,7 +4,6 @@ import PromoCode from "../PromoCode/PromoCode";
 
 const PromoCodes = () => {
     const [promocodes] = usePromoCodes();
-    console.log(promocodes);
 
     return (
         <div>

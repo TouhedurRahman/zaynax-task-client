@@ -5,7 +5,7 @@ const useCart = () => {
     const { data: cart = [], refetch } = useQuery({
         queryKey: ["cart"],
         queryFn: async () => {
-            const res = await axios.get("http://localhost:5000/cart");
+            const res = await axios.get("https://zaynax-task-server.vercel.app/cart");
             return res.data;
         }
     });

@@ -38,10 +38,8 @@ const Cart = () => {
         return total + product.shippingCharge;
     }, 0);
 
-    // const handleApplyPromoCode = () => {
-    //     console.log('Promo code applied: ', promoCode);
-    // };
     const handleApplyPromoCode = () => {
+        setErrorPromoMsg("");
         const foundPromoCode = promocodes.find(code => code.promoCode === promoCode);
 
         if (foundPromoCode) {
@@ -52,7 +50,7 @@ const Cart = () => {
 
         } else {
             // Promo code not found
-            setErrorPromoMsg("Inavlid Promo Code")
+            setErrorPromoMsg("Inavlid Promo Code");
         }
     };
 
@@ -68,7 +66,7 @@ const Cart = () => {
                 totalPrice: ((calculateTotalPrice + calculateShippingCharge) - discountPrice),
                 status: "pending"
             }
-            axios.post("http://localhost:5000/orders", orderedInfo)
+            axios.post("https://zaynax-task-server.vercel.app/orders", orderedInfo)
                 .then(response => {
                     if (response.data.insertResult.insertedId && response.data.deleteResult.deletedCount > 0) {
                         refetch();

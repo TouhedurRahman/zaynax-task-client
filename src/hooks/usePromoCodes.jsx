@@ -5,7 +5,7 @@ const usePromoCodes = () => {
     const { data: promocodes = [], isLoading: loading, refetch } = useQuery({
         queryKey: ['promocodes'],
         queryFn: async () => {
-            const url = 'http://localhost:5000/promocodes';
+            const url = 'https://zaynax-task-server.vercel.app/promocodes';
             const result = await fetch(url);
             return result.json();
         }

@@ -10,7 +10,7 @@ const AllOrders = () => {
             status: updateStatus
         }
 
-        axios.patch(`http://localhost:5000/order/${id}`, updatedStatus)
+        axios.patch(`https://zaynax-task-server.vercel.app/order/${id}`, updatedStatus)
             .then(response => {
                 if (response.data.modifiedCount) {
                     refetch();

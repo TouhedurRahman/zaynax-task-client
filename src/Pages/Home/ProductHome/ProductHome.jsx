@@ -26,7 +26,7 @@ const ProductHome = ({ product }) => {
             color,
             size
         }
-        axios.post('http://localhost:5000/cart', cartProduct)
+        axios.post('https://zaynax-task-server.vercel.app/cart', cartProduct)
             .then(response => {
                 if (response.data.insertedId) {
                     refetch();

@@ -32,7 +32,7 @@ const AddNewProduct = () => {
                     active
                 }
 
-                axios.post('http://localhost:5000/products', newItem)
+                axios.post('https://zaynax-task-server.vercel.app/products', newItem)
                     .then(data => {
                         if (data.data.insertedId) {
                             reset();
